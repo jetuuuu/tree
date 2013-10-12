@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		114CD8C418097C27009B4D7C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 114CD8C318097C27009B4D7C /* main.cpp */; };
 		114CD8C618097C27009B4D7C /* tree.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 114CD8C518097C27009B4D7C /* tree.1 */; };
+		114CD8CE18098107009B4D7C /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 114CD8CC18098107009B4D7C /* Node.cpp */; };
+		114CD8D11809837B009B4D7C /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 114CD8CF1809837B009B4D7C /* Tree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,10 @@
 		114CD8C018097C27009B4D7C /* tree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tree; sourceTree = BUILT_PRODUCTS_DIR; };
 		114CD8C318097C27009B4D7C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		114CD8C518097C27009B4D7C /* tree.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = tree.1; sourceTree = "<group>"; };
+		114CD8CC18098107009B4D7C /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		114CD8CD18098107009B4D7C /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		114CD8CF1809837B009B4D7C /* Tree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tree.cpp; sourceTree = "<group>"; };
+		114CD8D01809837B009B4D7C /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				114CD8C318097C27009B4D7C /* main.cpp */,
+				114CD8CC18098107009B4D7C /* Node.cpp */,
+				114CD8CF1809837B009B4D7C /* Tree.cpp */,
+				114CD8D01809837B009B4D7C /* Tree.h */,
+				114CD8CD18098107009B4D7C /* Node.h */,
 				114CD8C518097C27009B4D7C /* tree.1 */,
 			);
 			path = tree;
@@ -117,7 +127,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				114CD8D11809837B009B4D7C /* Tree.cpp in Sources */,
 				114CD8C418097C27009B4D7C /* main.cpp in Sources */,
+				114CD8CE18098107009B4D7C /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
