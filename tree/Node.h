@@ -19,6 +19,7 @@ private:
     Node* leftChild;
     Node* rightChild;
     
+    
 public:
     
     Node(int key, double data, Node* left = 0, Node* right = 0);

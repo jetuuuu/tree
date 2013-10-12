@@ -12,7 +12,6 @@ Node::Node(int key, double data, Node* left, Node* right) {
     
     this->key = key;
     this->data = data;
-    
     this->leftChild = left;
     this->rightChild = right;
     

@@ -18,6 +18,7 @@ private:
     
     Node* root;
     
+    
 public:
     
     Tree(int key, double data, Node* left = 0, Node* right = 0);

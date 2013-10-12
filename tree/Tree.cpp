@@ -10,8 +10,6 @@
 #include "Node.h"
 
 Tree::Tree(int key, double data, Node* left, Node* right) {
-    
     Node(key, data, left, right);
-    
 }
 
