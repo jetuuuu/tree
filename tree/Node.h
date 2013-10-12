@@ -25,7 +25,10 @@ public:
     Node(int key, double data, Node* left = 0, Node* right = 0);
     int getKey();
     double getData();
-    
+    Node* getLeft();
+    Node* getRight();
+    void setLeft(Node* left);
+    void setRight(Node* right);
 };
 
 #endif /* defined(__tree__Node__) */
