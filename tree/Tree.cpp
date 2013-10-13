@@ -10,7 +10,8 @@
 #include "Node.h"
 
 Tree::Tree(int key, double data, Node* left, Node* right) {
-    Node(key, data, left, right);
+    Node* root = new Node(key, data, left, right);
+    this->root = root;
 }
 
 Node* Tree::find(int key) {
@@ -67,3 +68,35 @@ void Tree::insert(int key, double data) {
     }
     
 }
+
+
+void Tree::inorderTreeWalk(Node* node) {
+    
+    if (node != 0) {
+        this->inorderTreeWalk(node->getLeft());
+        std::cout<< node->getKey()<< "; ";
+        this->inorderTreeWalk(node->getRight());
+    }
+    
+}
+
+Node* Tree::getRoot() {
+    return this->root;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

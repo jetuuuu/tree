@@ -25,7 +25,8 @@ public:
     Node* find(int key);
     void insert(int key, double data);
     void deleteElements(int key);
-    
+    void inorderTreeWalk(Node* node);
+    Node* getRoot();
 };
 
 
