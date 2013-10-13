@@ -27,6 +27,8 @@ public:
     void deleteElements(int key);
     void inorderTreeWalk(Node* node);
     Node* getRoot();
+    Node* min(Node* node);
+    Node* max(Node* node);
 };
 
 

@@ -84,9 +84,32 @@ Node* Tree::getRoot() {
     return this->root;
 }
 
+Node* Tree::min(Node *node) {
+    
+    Node* last;
+    Node* current = node;
+    
+    while (current != 0) {
+        last = current;
+        current = last->getLeft();
+    }
+    
+    return last;
+}
 
-
-
+Node* Tree::max(Node *node) {
+    
+    Node* last;
+    Node* current = node;
+    
+    while (current != 0) {
+        last = current;
+        current = last->getRight();
+    }
+    
+    return last;
+    
+}
 
 
 
