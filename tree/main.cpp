@@ -20,11 +20,15 @@ int main(int argc, const char * argv[])
     theTree->insert(25, 1.7);
     theTree->insert(15, 2);
     theTree->insert(46, 4);
+    theTree->insert(60, 6);
+    theTree->insert(54, 5.4);
+    theTree->insert(71, 7);
+    
     
     Node* node = theTree->find(25);
-    std::cout<< "Left adress: "<< node->getLeft()<< std::endl;
+    std::cout<< "Left adress: "<< node->getKey()<< std::endl;
     
-    std::cout<< node->getInfo()<<std::endl;
+    theTree->inorderTreeWalk(theTree->getRoot());
  
     return 0;
     
