@@ -8,6 +8,7 @@
 
 #include "Node.h"
 
+
 Node::Node(int key, double data, Node* left, Node* right) {
     
     this->key = key;
