@@ -23,13 +23,17 @@ int main(int argc, const char * argv[])
     theTree->insert(60, 6);
     theTree->insert(54, 5.4);
     theTree->insert(71, 7);
-    
+    theTree->insert(1, 0);
     
     Node* node = theTree->find(25);
     std::cout<< "Left adress: "<< node->getKey()<< std::endl;
     
     theTree->inorderTreeWalk(theTree->getRoot());
  
+    Node* min = theTree->max(theTree->getRoot());
+    
+    std::cout<< std::endl<<"Key: "<<min->getKey()<< std::endl;
+    
     return 0;
     
 }
