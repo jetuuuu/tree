@@ -11,23 +11,65 @@
 
 #include <iostream>
 
+template<class VALUE>
+
 class Node {
     
 private:
     int key;
-    double data;
-    Node* leftChild;
-    Node* rightChild;
+    VALUE data;
+    Node<VALUE>* leftChild;
+    Node<VALUE>* rightChild;
     
 public:
     
-    Node(int key, double data, Node* left = 0, Node* right = 0);
+    Node(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
     int getKey();
-    double getData();
-    Node* getLeft();
-    Node* getRight();
-    void setLeft(Node* left);
-    void setRight(Node* right);
+    VALUE getData();
+    Node<VALUE>* getLeft();
+    Node<VALUE>* getRight();
+    void setLeft(Node<VALUE>* left);
+    void setRight(Node<VALUE>* right);
 };
+
+template<class VALUE>
+Node<VALUE>::Node(int key, VALUE data, Node<VALUE>* left, Node<VALUE>* right) {
+    
+    this->key = key;
+    this->data = data;
+    this->leftChild = left;
+    this->rightChild = right;
+    
+}
+
+template<class VALUE>
+int Node<VALUE>::getKey() {
+    return this->key;
+}
+
+template<class VALUE>
+VALUE Node<VALUE>::getData() {
+    return this->data;
+}
+
+template<class VALUE>
+Node<VALUE>* Node<VALUE>::getLeft() {
+    return this->leftChild;
+}
+
+template<class VALUE>
+Node<VALUE>* Node<VALUE>::getRight() {
+    return this->rightChild;
+}
+
+template<class VALUE>
+void Node<VALUE>::setLeft(Node<VALUE>* left) {
+    this->leftChild = left;
+}
+
+template<class VALUE>
+void Node<VALUE>::setRight(Node<VALUE>* right) {
+    this->rightChild = right;
+}
 
 #endif /* defined(__tree__Node__) */
