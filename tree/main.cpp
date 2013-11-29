@@ -9,13 +9,15 @@
 #include <iostream>
 #include "Node.h"
 #include "Tree.h"
+#include "RBTree.h"
+#include "RBNode.h"
 
 int main(int argc, const char * argv[])
 {
 
     // insert code here...
     
-    Tree<double>* theTree = new Tree<double>(50, 1.5);
+    RBTree<double>* theTree = new RBTree<double>(50, 1.5);
     
     theTree->insert(25, 1.7);
     theTree->insert(15, 2.0);
@@ -25,14 +27,14 @@ int main(int argc, const char * argv[])
     theTree->insert(71, 7.0);
     theTree->insert(1, 0.0);
     
-    Node<double>* node = theTree->find(25);
-    std::cout<< "Left adress: "<< node->getData()<< std::endl;
+    /*RBNode<double>* node = theTree->find(25);
+    std::cout<< "Left adress: "<< node->getData()<< std::endl;*/
     
     theTree->inorderTreeWalk(theTree->getRoot());
  
-    Node<double>* min = theTree->max(theTree->getRoot());
+    //RBNode<double>* min = theTree->max(theTree->getRoot());
     
-    std::cout<< std::endl<<"Key: "<<min->getKey()<< std::endl;
+    //std::cout<< std::endl<<"Key: "<<min->getKey()<< std::endl;
     
     return 0;
     

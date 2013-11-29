@@ -24,12 +24,13 @@ private:
 public:
     
     Node(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
-    int getKey();
-    VALUE getData();
-    Node<VALUE>* getLeft();
-    Node<VALUE>* getRight();
-    void setLeft(Node<VALUE>* left);
-    void setRight(Node<VALUE>* right);
+    //~Node();
+    virtual int getKey();
+    virtual VALUE getData();
+    virtual Node<VALUE>& getLeft();
+    virtual Node<VALUE>& getRight();
+    virtual void setLeft(Node<VALUE>* left);
+    virtual void setRight(Node<VALUE>* right);
 };
 
 template<class VALUE>
@@ -53,13 +54,13 @@ VALUE Node<VALUE>::getData() {
 }
 
 template<class VALUE>
-Node<VALUE>* Node<VALUE>::getLeft() {
-    return this->leftChild;
+Node<VALUE>& Node<VALUE>::getLeft() {
+    return *this->leftChild;
 }
 
 template<class VALUE>
-Node<VALUE>* Node<VALUE>::getRight() {
-    return this->rightChild;
+Node<VALUE>& Node<VALUE>::getRight() {
+    return *this->rightChild;
 }
 
 template<class VALUE>
