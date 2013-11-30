@@ -49,7 +49,6 @@ template <class VALUE>
 void RBTree<VALUE>::rotateLeft(RBNode<VALUE>* node) {
     
     RBNode<VALUE>* temp = node->getRight();
-    //(RBNode<VALUE>)*node->getRight() = (RBNode<VALUE>)temp->getLeft();
     node->setRight(temp->getLeft());
     
     if (temp->getLeft()) {
@@ -117,11 +116,11 @@ void RBTree<VALUE>::rotateRight(RBNode<VALUE>* node) {
 template <class VALUE>
 bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
     if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getLeft() != 0)) {
-        return ((node->getKey() == node->getParent()->getLeft()->getKey()) && (node->getParent()->getKey() == node->getParent()->getParent()->getLeft()->getKey()));
+        return ((node == node->getParent()->getLeft()) && (node->getParent() == node->getParent()->getParent()->getLeft()));
             //return true;
     }
     else if ((node->getParent()->getRight() != 0) && node->getParent()->getParent()->getRight() != 0) {
-        return ((node->getKey() == node->getParent()->getRight()->getKey()) && (node->getParent()->getKey() == node->getParent()->getParent()->getRight()->getKey()));
+        return ((node == node->getParent()->getRight()) && (node->getParent() == node->getParent()->getParent()->getRight()));
         //return true;
     }
     else
@@ -131,11 +130,11 @@ bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
 template <class VALUE>
 bool RBTree<VALUE>::internalSon(RBNode<VALUE>* node) {
     if (node->getParent()->getRight() != 0 && node->getParent()->getParent()->getLeft() != 0)
-        return ((node->getKey() == node->getParent()->getRight()->getKey()) && (node->getParent()->getParent()->getLeft()->getKey() == node->getParent()->getKey())); //{
+        return ((node == node->getParent()->getRight()) && (node->getParent()->getParent()->getLeft() == node->getParent())); //{
         //return true;
     //}
     else if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getRight() != 0))
-    return ((node->getKey() == node->getParent()->getLeft()->getKey()) && (node->getParent()->getParent()->getRight()->getKey() == node->getParent()->getKey()));
+    return ((node == node->getParent()->getLeft()) && (node->getParent()->getParent()->getRight() == node->getParent()));
         //return true;
     else
         return false;
@@ -166,7 +165,7 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
                     if ((current->getColor() == RED) && (current->getParent()->getRight()->getColor() == RED)) {
                         current->changeColor();
                         current->getParent()->getRight()->changeColor();
-                        if (current->getParent()->getKey() != this->getRoot()->getKey())
+                        if (!(current->getParent() == this->getRoot()))
                             current->getParent()->changeColor();
                     }
                 }
@@ -182,7 +181,7 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
                     if ((current->getColor() == RED) && (current->getParent()->getLeft()->getColor() == RED)) {
                         current->changeColor();
                         current->getParent()->getLeft()->changeColor();
-                        if (current->getParent()->getKey() != this->getRoot()->getKey())
+                        if (!(current->getParent() == this->getRoot()))
                             current->getParent()->changeColor();
                     }
                 }
@@ -195,32 +194,27 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
 template <class VALUE>
 
 void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
-    //perent is black
-    //std::cout<<"insert\n";
     if (node->getParent()->getColor() == BLACK) {
         return;
     }
     else if ((node->getParent()->getColor() == RED) && (this->externalSon(node))){
         node->getParent()->getParent()->changeColor();
         node->getParent()->changeColor();
-        if (node->getParent()->getKey() == node->getParent()->getParent()->getLeft()->getKey()) {
+        if (node->getParent() == node->getParent()->getParent()->getLeft()) {
                 rotateRight(node->getParent()->getParent());
-            //std::cout<<"This1: " << node->getKey()<<std::endl;
         }
         else {
             rotateLeft(node->getParent()->getParent());
-                        //std::cout<<"This2: " << node->getKey()<<std::endl;
         }
     }
     else if ((node->getParent()->getColor() == RED) && (this->internalSon(node))) {
         node->getParent()->getParent()->changeColor();
         node->changeColor();
-                    std::cout<<"OR This: " << node->getKey()<<std::endl;
-        if ((node->getParent()->getRight() != 0) && (node->getKey() == node->getParent()->getRight()->getKey()))
+        if ((node->getParent()->getRight() != 0) && (node == node->getParent()->getRight()))
             rotateLeft(node->getParent());
         else
             rotateRight(node->getParent());
-        if (node->getKey() == node->getParent()->getLeft()->getKey())
+        if (node == node->getParent()->getLeft())
             rotateRight(node->getParent());
         else
             rotateLeft(node->getParent());

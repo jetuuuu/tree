@@ -37,6 +37,7 @@ public:
     void setParent(RBNode<VALUE>* perent);
     void setColor(colorNode color);
     void changeColor();
+    bool operator==(RBNode<VALUE>& node);
 };
 
 
@@ -110,7 +111,11 @@ void RBNode<VALUE>::setRight(RBNode<VALUE>* right) {
 
 template <class VALUE>
 void RBNode<VALUE>::setParent(RBNode<VALUE> *perent) {
-    //std::cout<< "set parent\n";
     this->parent = perent;
+}
+
+template <class VALUE>
+bool RBNode<VALUE>::operator==(RBNode<VALUE> &node) {
+    return ((this->getKey() == node.getKey()) && (this->getData() == node.getData()));
 }
 #endif

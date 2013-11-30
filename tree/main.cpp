@@ -37,7 +37,7 @@ int main(int argc, const char * argv[])
     
     //RBNode<double>* min = theTree->max(theTree->getRoot());
     
-    std::cout<< std::endl<<"Key: "<<theTree->getRoot()->getRight()->getKey()<< std::endl;
+    std::cout<< std::endl<<"Key: "<<theTree->getRoot()->getRight()->getLeft()->getKey()<< std::endl;
     
     return 0;
     
