@@ -26,16 +26,17 @@ private:
     RBNode<VALUE>* rightChild;
 public:
     RBNode(int key, VALUE data, RBNode<VALUE>* right = 0, RBNode<VALUE>* left = 0, RBNode<VALUE>* parent = 0, colorNode color = RED);
-    colorNode getColor();
-    RBNode& getParent();
+    int getColor();
+    RBNode* getParent();
     virtual int getKey();
     virtual VALUE getData();
-    virtual RBNode<VALUE>& getLeft();
-    virtual RBNode<VALUE>& getRight();
+    virtual RBNode<VALUE>* getLeft();
+    virtual RBNode<VALUE>* getRight();
     virtual void setLeft(RBNode<VALUE>* left);
     virtual void setRight(RBNode<VALUE>* right);
     void setParent(RBNode<VALUE>* perent);
     void setColor(colorNode color);
+    void changeColor();
 };
 
 
@@ -46,20 +47,35 @@ RBNode<VALUE>::RBNode(int key, VALUE data, RBNode<VALUE>* right, RBNode<VALUE>* 
     this->leftChild = left;
     this->rightChild = right;
     this->color = color;
+    this->parent = parent;
 }
 
 template <class VALUE>
-colorNode RBNode<VALUE>::getColor() {
-    return this->color;
+int RBNode<VALUE>::getColor() {
+    //std::cout<<"COLOR: " <<  RED << std::endl;
+    if (this->color == RED)
+        return 5;
+    else
+        return 10;
 }
 
 template <class VALUE>
 void RBNode<VALUE>::setColor(colorNode color) {
     this->color = color;
 }
+
 template <class VALUE>
-RBNode<VALUE>& RBNode<VALUE>::getParent() {
-    return *this->parent;
+void RBNode<VALUE>::changeColor() {
+    if (this->color == BLACK)
+        this->color = RED;
+    else
+        this->color = BLACK;
+}
+
+
+template <class VALUE>
+RBNode<VALUE>* RBNode<VALUE>::getParent() {
+    return this->parent;
 }
 
 template<class VALUE>
@@ -73,13 +89,13 @@ VALUE RBNode<VALUE>::getData() {
 }
 
 template<class VALUE>
-RBNode<VALUE>& RBNode<VALUE>::getLeft() {
-    return *this->leftChild;
+RBNode<VALUE>* RBNode<VALUE>::getLeft() {
+    return this->leftChild;
 }
 
 template<class VALUE>
-RBNode<VALUE>& RBNode<VALUE>::getRight() {
-    return *this->rightChild;
+RBNode<VALUE>* RBNode<VALUE>::getRight() {
+    return this->rightChild;
 }
 
 template<class VALUE>
@@ -94,6 +110,7 @@ void RBNode<VALUE>::setRight(RBNode<VALUE>* right) {
 
 template <class VALUE>
 void RBNode<VALUE>::setParent(RBNode<VALUE> *perent) {
-    this->parent = parent;
+    //std::cout<< "set parent\n";
+    this->parent = perent;
 }
 #endif
