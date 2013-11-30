@@ -130,11 +130,13 @@ bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
 
 template <class VALUE>
 bool RBTree<VALUE>::internalSon(RBNode<VALUE>* node) {
-    if ((node->getKey() == node->getParent()->getRight()->getKey()) && (node->getParent()->getParent()->getLeft()->getKey() == node->getParent()->getKey())) {
-        return true;
-    }
-    else if ((node->getKey() == node->getParent()->getLeft()->getKey()) && (node->getParent()->getParent()->getRight()->getKey() == node->getParent()->getKey()))
-        return true;
+    if (node->getParent()->getRight() != 0 && node->getParent()->getParent()->getLeft() != 0)
+        return ((node->getKey() == node->getParent()->getRight()->getKey()) && (node->getParent()->getParent()->getLeft()->getKey() == node->getParent()->getKey())); //{
+        //return true;
+    //}
+    else if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getRight() != 0))
+    return ((node->getKey() == node->getParent()->getLeft()->getKey()) && (node->getParent()->getParent()->getRight()->getKey() == node->getParent()->getKey()));
+        //return true;
     else
         return false;
 }
@@ -179,7 +181,7 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
                 else if (current->getParent()->getLeft() != 0) {
                     if ((current->getColor() == RED) && (current->getParent()->getLeft()->getColor() == RED)) {
                         current->changeColor();
-                        current->getParent()->getRight()->changeColor();
+                        current->getParent()->getLeft()->changeColor();
                         if (current->getParent()->getKey() != this->getRoot()->getKey())
                             current->getParent()->changeColor();
                     }
@@ -187,7 +189,6 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
             }
         }
     }
-    //std::cout<< "FIX" << std::endl;
     this->fixInsert(newNode);
 }
 
@@ -195,6 +196,7 @@ template <class VALUE>
 
 void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
     //perent is black
+    //std::cout<<"insert\n";
     if (node->getParent()->getColor() == BLACK) {
         return;
     }
@@ -203,15 +205,25 @@ void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
         node->getParent()->changeColor();
         if (node->getParent()->getKey() == node->getParent()->getParent()->getLeft()->getKey()) {
                 rotateRight(node->getParent()->getParent());
+            //std::cout<<"This1: " << node->getKey()<<std::endl;
         }
-        else
+        else {
             rotateLeft(node->getParent()->getParent());
+                        //std::cout<<"This2: " << node->getKey()<<std::endl;
+        }
     }
-    else if ((node->getParent()->getColor() == RED) && !(this->externalSon(node))) {
+    else if ((node->getParent()->getColor() == RED) && (this->internalSon(node))) {
         node->getParent()->getParent()->changeColor();
         node->changeColor();
-        rotateLeft(node->getParent());
-        rotateRight(node->getParent());
+                    std::cout<<"OR This: " << node->getKey()<<std::endl;
+        if ((node->getParent()->getRight() != 0) && (node->getKey() == node->getParent()->getRight()->getKey()))
+            rotateLeft(node->getParent());
+        else
+            rotateRight(node->getParent());
+        if (node->getKey() == node->getParent()->getLeft()->getKey())
+            rotateRight(node->getParent());
+        else
+            rotateLeft(node->getParent());
     }
 }
 
@@ -220,7 +232,10 @@ void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
     
     if (node != 0) {
         this->inorderTreeWalk((node->getLeft()));
-        std::cout<< node->getKey()<< " ("<< node->getColor()<< ")" <<"; ";
+        if (node->getColor() == RED)
+            std::cout<< node->getKey()<< "(RED)" <<"; ";
+        else
+            std::cout<< node->getKey()<< "(BLACK)" <<"; ";
         this->inorderTreeWalk((node->getRight()));
     }
     

@@ -28,10 +28,7 @@ public:
     Node<VALUE>* find(int key);
     void insert(int key, VALUE data);
     void deleteElements(int key);
-    //void inorderTreeWalk(Node<VALUE>* node);
     Node<VALUE>* getRoot();
-    //Node<VALUE>* min(Node<VALUE>* node);
-    //Node<VALUE>* max(Node<VALUE>* node);
 };
 
 

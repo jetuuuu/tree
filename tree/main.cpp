@@ -17,26 +17,27 @@ int main(int argc, const char * argv[])
 
     // insert code here...
     
-    RBTree<double>* theTree = new RBTree<double>(50, 1.5);
+    RBTree<double>* theTree = new RBTree<double>(13, 1.5);
     
-    theTree->insert(25, 1.7);
-    theTree->insert(75, 2.0);
-    theTree->insert(12, 4.0);
-    theTree->insert(18, 6.0);
-    /*theTree->insert(54, 5.4);
-    theTree->insert(71, 7.0);
-    theTree->insert(1, 0.0);*/
-    
+    theTree->insert(8, 1.7);
+    theTree->insert(17, 2.0);
+    theTree->insert(1, 4.0);
+    theTree->insert(11, 6.0);
+    theTree->insert(6, 5.4);
+    theTree->insert(15, 7.0);
+    theTree->insert(25, 0.0);
+    theTree->insert(22, 0.0);
+    //theTree->insert(27, 0.0);
     /*RBNode<double>* node = theTree->find(25);
     std::cout<< "Left adress: "<< node->getData()<< std::endl;*/
     
     theTree->inorderTreeWalk(theTree->getRoot());
-    
+
     RBNode<double>* node = theTree->getRoot();
     
     //RBNode<double>* min = theTree->max(theTree->getRoot());
     
-    std::cout<< std::endl<<"Key: "<<node->getKey()<< std::endl;
+    std::cout<< std::endl<<"Key: "<<theTree->getRoot()->getRight()->getKey()<< std::endl;
     
     return 0;
     
