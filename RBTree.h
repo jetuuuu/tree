@@ -13,20 +13,23 @@
 #include "CommonTree.h"
 
 template <class VALUE>
-class RBTree {
+class RBTree : public CommonTree<VALUE> {
 private:
     RBNode<VALUE>* root;
     void rotateLeft(RBNode<VALUE>* node);
     void rotateRight(RBNode<VALUE>* node);
     void fixInsert(RBNode<VALUE>* node);
+    void fixDown(RBNode<VALUE>* node);
     bool externalSon(RBNode<VALUE>* node);
     bool internalSon(RBNode<VALUE>* node);
 public:
     void insert(int key, VALUE data);
     RBTree(int key, VALUE data, RBNode<VALUE>* left = 0, RBNode<VALUE>* right = 0);
     RBNode<VALUE>* getRoot();
-    void inorderTreeWalk(RBNode<VALUE>* node);
     void setRoot(RBNode<VALUE>* rot);
+    RBNode<VALUE>* find(int key);
+    void LSZ_Right(RBNode<VALUE>* node, int s);
+    void inorderTreeWalk(RBNode<VALUE>* node);
 };
 
 template<class VALUE>
@@ -76,7 +79,7 @@ void RBTree<VALUE>::rotateLeft(RBNode<VALUE>* node) {
     if (node != 0) {
         node->setParent(temp);
     }
-            std::cout<< "ROTATE LEFT" << std::endl;
+    std::cout<< "ROTATE LEFT" << std::endl;
 }
 
 template <class VALUE>
@@ -109,19 +112,16 @@ void RBTree<VALUE>::rotateRight(RBNode<VALUE>* node) {
     if (node != 0) {
         node->setParent(temp);
     }
-    
-        std::cout<< "ROTATE RIGHT" << std::endl;
+    std::cout<< "ROTATE RIGHT" << std::endl;
 }
 
 template <class VALUE>
 bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
-    if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getLeft() != 0)) {
+    if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getLeft() != 0)) {
         return ((node == node->getParent()->getLeft()) && (node->getParent() == node->getParent()->getParent()->getLeft()));
-            //return true;
     }
-    else if ((node->getParent()->getRight() != 0) && node->getParent()->getParent()->getRight() != 0) {
+    else if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getRight() != 0) && node->getParent()->getParent()->getRight() != 0) {
         return ((node == node->getParent()->getRight()) && (node->getParent() == node->getParent()->getParent()->getRight()));
-        //return true;
     }
     else
         return false;
@@ -131,11 +131,8 @@ template <class VALUE>
 bool RBTree<VALUE>::internalSon(RBNode<VALUE>* node) {
     if (node->getParent()->getRight() != 0 && node->getParent()->getParent()->getLeft() != 0)
         return ((node == node->getParent()->getRight()) && (node->getParent()->getParent()->getLeft() == node->getParent())); //{
-        //return true;
-    //}
     else if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getRight() != 0))
     return ((node == node->getParent()->getLeft()) && (node->getParent()->getParent()->getRight() == node->getParent()));
-        //return true;
     else
         return false;
 }
@@ -167,6 +164,7 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
                         current->getParent()->getRight()->changeColor();
                         if (!(current->getParent() == this->getRoot()))
                             current->getParent()->changeColor();
+                        std::cout<< "CHANGE COLOR\n";
                     }
                 }
                 
@@ -183,16 +181,24 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
                         current->getParent()->getLeft()->changeColor();
                         if (!(current->getParent() == this->getRoot()))
                             current->getParent()->changeColor();
+                        std::cout<< "CHANGE COLOR"<< std::endl;
                     }
                 }
             }
         }
     }
+    std::cout<< "FIX: " << newNode->getKey() << std::endl;
     this->fixInsert(newNode);
+    this->fixDown(newNode);
 }
 
 template <class VALUE>
+RBNode<VALUE>* RBTree<VALUE>::find(int key) {
+    RBNode<VALUE>* current = this->root;
+    return (RBNode<VALUE>*)(CommonTree<VALUE>::find(key, (Node<VALUE>*)current));
+}
 
+template <class VALUE>
 void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
     if (node->getParent()->getColor() == BLACK) {
         return;
@@ -221,17 +227,80 @@ void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
     }
 }
 
-template<class VALUE>
-void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
-    
-    if (node != 0) {
-        this->inorderTreeWalk((node->getLeft()));
-        if (node->getColor() == RED)
-            std::cout<< node->getKey()<< "(RED)" <<"; ";
-        else
-            std::cout<< node->getKey()<< "(BLACK)" <<"; ";
-        this->inorderTreeWalk((node->getRight()));
+template <class VALUE>
+void RBTree<VALUE>::fixDown(RBNode<VALUE>* node) {
+    RBNode<VALUE>* x = node->getParent()->getParent();
+
+    if (x != 0) {
+        RBNode<VALUE>* p = x->getParent();
+        
+        if (p != 0) {
+            RBNode<VALUE>* g = p->getParent();
+            if (g != 0) {
+            if ((x->getColor() == 5) && (x->getColor() == p->getColor())) {
+                if (this->externalSon(x) == true) {
+                    g->changeColor();
+                    p->changeColor();
+                    
+                    if (x == p->getLeft()) {
+                        this->rotateRight(g);
+                    }
+                    else {
+                        this->rotateLeft(g);
+                    }
+                }
+                else if (this->internalSon(x) == true) {
+                    g->changeColor();
+                    x->changeColor();
+                    
+                    if (x == p->getLeft()) {
+                        this->rotateRight(p);
+                    }
+                    else {
+                        this->rotateLeft(p);
+                    }
+                    
+                    if (x->getKey() < g->getKey()) {
+                        this->rotateRight(g);
+                    }
+                    else {
+                        this->rotateLeft(g);
+                    }
+                }
+            }
+            }
+        }
+    }
+    else {
+        return;
     }
     
+}
+
+template<class VALUE>
+void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
+    if (node != 0) {
+        this->inorderTreeWalk(node->getLeft());
+        if (node->getColor() == RED)
+            std::cout<< node->getKey()<< "(RED); ";
+        else
+            std::cout<< node->getKey()<< "(BLACK); ";
+        this->inorderTreeWalk(node->getRight());
+    }
+    
+}
+
+template <class VALUE>
+void RBTree<VALUE>::LSZ_Right(RBNode<VALUE>* node, int s)
+{
+    if  (node != NULL)
+    {
+        LSZ_Right(node->getRight(),s+1);
+        for (int i=1;i<=s;i++)
+            std::cout << "\t";
+        std::cout << node->getKey() << std::endl;
+        LSZ_Right(node->getLeft(),s+1);
+
+    }
 }
 #endif

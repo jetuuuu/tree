@@ -81,21 +81,7 @@ template<class VALUE>
 Node<VALUE>* Tree<VALUE>::find(int key) {
     
     Node<VALUE>* current = this->root;
-    
-    while (current->getKey() != key) {
-        
-        if (key < current->getKey()) {
-            current = &current->getLeft();
-        }
-        else {
-            current = &current->getRight();
-        }
-        
-        if (current == 0)
-            return 0;
-    }
-    
-    return current;
+    return CommonTree<VALUE>::find(key, current);
     
 }
 
@@ -103,43 +89,3 @@ template<class VALUE>
 Node<VALUE>* Tree<VALUE>::getRoot() {
     return this->root;
 }
-
-/*template<class VALUE>
-void Tree<VALUE>::inorderTreeWalk(Node<VALUE>* node) {
-    
-    if (node != 0) {
-        this->inorderTreeWalk(&node->getLeft());
-        std::cout<< node->getKey()<< "; ";
-        this->inorderTreeWalk(&node->getRight());
-    }
-    
-}
-
-template<class VALUE>
-Node<VALUE>* Tree<VALUE>::min(Node<VALUE>* node) {
-    
-    Node<VALUE>* last;
-    Node<VALUE>* current = node;
-    
-    while (current != 0) {
-        last = current;
-        current = last->getLeft();
-    }
-    
-    return last;
-}
-
-template<class VALUE>
-Node<VALUE>* Tree<VALUE>::max(Node<VALUE>* node) {
-    
-    Node<VALUE>* last;
-    Node<VALUE>* current = node;
-    
-    while (current != 0) {
-        last = current;
-        current = &last->getRight();
-    }
-    
-    return last;
-    
-}*/

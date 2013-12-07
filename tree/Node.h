@@ -24,7 +24,6 @@ private:
 public:
     
     Node(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
-    //~Node();
     virtual int getKey();
     virtual VALUE getData();
     virtual Node<VALUE>& getLeft();

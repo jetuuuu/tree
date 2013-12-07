@@ -15,14 +15,15 @@ template <class VALUE>
 
 class CommonTree {
 public:
-    void inorderTreeWalk(Node<VALUE>* node);
-    Node<VALUE>* max(Node<VALUE>* node);
-    Node<VALUE>* min(Node<VALUE>* node);
+    virtual void inorderTreeWalk(Node<VALUE>* node);
+    virtual Node<VALUE>* max(Node<VALUE>* node);
+    virtual Node<VALUE>* min(Node<VALUE>* node);
+protected:
+    virtual Node<VALUE>* find(int key, Node<VALUE>* node);
 };
 
 template<class VALUE>
 void CommonTree<VALUE>::inorderTreeWalk(Node<VALUE>* node) {
-    
     if (node != 0) {
         this->inorderTreeWalk(&node->getLeft());
         std::cout<< node->getKey()<< "; ";
@@ -39,7 +40,7 @@ Node<VALUE>* CommonTree<VALUE>::min(Node<VALUE>* node) {
     
     while (current != 0) {
         last = current;
-        current = last->getLeft();
+        current = &last->getLeft();
     }
     
     return last;
@@ -58,5 +59,24 @@ Node<VALUE>* CommonTree<VALUE>::max(Node<VALUE>* node) {
     
     return last;
     
+}
+
+template <class VALUE>
+Node<VALUE>* CommonTree<VALUE>::find(int key, Node<VALUE> *current) {
+    
+    while (current->getKey() != key) {
+        
+        if (key < current->getKey()) {
+            current = &current->getLeft();
+        }
+        else {
+            current = &current->getRight();
+        }
+        
+        if (current == 0)
+            return 0;
+    }
+    
+    return current;
 }
 #endif

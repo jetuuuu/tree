@@ -53,7 +53,6 @@ RBNode<VALUE>::RBNode(int key, VALUE data, RBNode<VALUE>* right, RBNode<VALUE>* 
 
 template <class VALUE>
 int RBNode<VALUE>::getColor() {
-    //std::cout<<"COLOR: " <<  RED << std::endl;
     if (this->color == RED)
         return 5;
     else
