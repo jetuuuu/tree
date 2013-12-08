@@ -26,10 +26,11 @@ public:
     Node(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
     virtual int getKey();
     virtual VALUE getData();
-    virtual Node<VALUE>& getLeft();
-    virtual Node<VALUE>& getRight();
+    virtual Node<VALUE>* getLeft();
+    virtual Node<VALUE>* getRight();
     virtual void setLeft(Node<VALUE>* left);
     virtual void setRight(Node<VALUE>* right);
+    ~Node();
 };
 
 template<class VALUE>
@@ -53,13 +54,13 @@ VALUE Node<VALUE>::getData() {
 }
 
 template<class VALUE>
-Node<VALUE>& Node<VALUE>::getLeft() {
-    return *this->leftChild;
+Node<VALUE>* Node<VALUE>::getLeft() {
+    return this->leftChild;
 }
 
 template<class VALUE>
-Node<VALUE>& Node<VALUE>::getRight() {
-    return *this->rightChild;
+Node<VALUE>* Node<VALUE>::getRight() {
+    return this->rightChild;
 }
 
 template<class VALUE>
@@ -72,4 +73,8 @@ void Node<VALUE>::setRight(Node<VALUE>* right) {
     this->rightChild = right;
 }
 
+template<class VALUE>
+Node<VALUE>::~Node() {
+    std::cout<<"Node delete\n";
+}
 #endif /* defined(__tree__Node__) */
