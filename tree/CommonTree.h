@@ -18,16 +18,66 @@ public:
     virtual void inorderTreeWalk(Node<VALUE>* node);
     virtual Node<VALUE>* max(Node<VALUE>* node);
     virtual Node<VALUE>* min(Node<VALUE>* node);
+    void printTree(Node<VALUE>* tree);
+private:
+    int _print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255]);
 protected:
     virtual Node<VALUE>* find(int key, Node<VALUE>* node);
 };
 
+template <class VALUE>
+int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255])
+{
+    char b[20];
+    int width = 5;
+    
+    if (!tree) return 0;
+    
+    sprintf(b, "(%03d)", tree->getKey());
+    
+    int left  = _print_t(tree->getLeft(),  1, offset, depth + 1, s);
+    int right = _print_t(tree->getRight(), 0, offset + left + width, depth + 1, s);
+    
+    for (int i = 0; i < width; i++)
+        s[depth][offset + left + i] = b[i];
+    
+    if (depth && is_left) {
+        
+        for (int i = 0; i < width + right; i++)
+            s[depth - 1][offset + left + width/2 + i] = '-';
+        
+        s[depth - 1][offset + left + width/2] = '.';
+        
+    } else if (depth && !is_left) {
+        
+        for (int i = 0; i < left + width; i++)
+            s[depth - 1][offset - width/2 + i] = '-';
+        
+        s[depth - 1][offset + left + width/2] = '.';
+    }
+    
+    return left + width + right;
+}
+
+template <class VALUE>
+void CommonTree<VALUE>::printTree(Node<VALUE>* tree)
+{
+    char s[20][255];
+    for (int i = 0; i < 20; i++)
+        sprintf(s[i], "%80s", " ");
+    
+    _print_t(tree, 0, 0, 0, s);
+    
+    for (int i = 0; i < 20; i++)
+        printf("%s\n", s[i]);
+}
+
 template<class VALUE>
 void CommonTree<VALUE>::inorderTreeWalk(Node<VALUE>* node) {
     if (node != 0) {
-        this->inorderTreeWalk(&node->getLeft());
+        this->inorderTreeWalk(node->getLeft());
         std::cout<< node->getKey()<< "; ";
-        this->inorderTreeWalk(&node->getRight());
+        this->inorderTreeWalk(node->getRight());
     }
     
 }
@@ -40,7 +90,7 @@ Node<VALUE>* CommonTree<VALUE>::min(Node<VALUE>* node) {
     
     while (current != 0) {
         last = current;
-        current = &last->getLeft();
+        current = last->getLeft();
     }
     
     return last;
@@ -54,7 +104,7 @@ Node<VALUE>* CommonTree<VALUE>::max(Node<VALUE>* node) {
     
     while (current != 0) {
         last = current;
-        current = &last->getRight();
+        current = last->getRight();
     }
     
     return last;
@@ -66,12 +116,10 @@ Node<VALUE>* CommonTree<VALUE>::find(int key, Node<VALUE> *current) {
     
     while (current->getKey() != key) {
         
-        if (key < current->getKey()) {
-            current = &current->getLeft();
-        }
-        else {
-            current = &current->getRight();
-        }
+        if (key < current->getKey())
+            current = current->getLeft();
+        else
+            current = current->getRight();
         
         if (current == 0)
             return 0;
