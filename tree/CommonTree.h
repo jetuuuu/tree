@@ -9,6 +9,9 @@
 #ifndef tree_CommonTree_h
 #define tree_CommonTree_h
 
+#include <string>
+#include <sstream>
+
 #include "Node.h"
 
 template <class VALUE>
@@ -19,7 +22,10 @@ public:
     virtual Node<VALUE>* max(Node<VALUE>* node);
     virtual Node<VALUE>* min(Node<VALUE>* node);
     void printTree(Node<VALUE>* tree);
+    std::string bracketPrint(Node<VALUE>* node);
 private:
+    std::string tree;
+    void traversal(Node<VALUE>* node);
     int _print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255]);
 protected:
     virtual Node<VALUE>* find(int key, Node<VALUE>* node);
@@ -68,7 +74,7 @@ void CommonTree<VALUE>::printTree(Node<VALUE>* tree)
     
     _print_t(tree, 0, 0, 0, s);
     
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 10; i++)
         printf("%s\n", s[i]);
 }
 
@@ -109,6 +115,30 @@ Node<VALUE>* CommonTree<VALUE>::max(Node<VALUE>* node) {
     
     return last;
     
+}
+
+template <class VALUE>
+void CommonTree<VALUE>::traversal(Node<VALUE> *node) {
+    
+    std::stringstream ss;
+    ss<<node->getKey();
+    std::string temp = "";
+    ss>>temp;
+    this->tree += "(";
+    this->tree += temp;
+    
+    if (node->getLeft() != 0)
+        this->traversal(node->getLeft());
+    if (node->getRight() != 0)
+        this->traversal(node->getRight());
+
+    this->tree += ')';
+}
+
+template <class VALUE>
+std::string CommonTree<VALUE>::bracketPrint(Node<VALUE>* node) {
+    this->traversal(node);
+    return tree;
 }
 
 template <class VALUE>

@@ -39,17 +39,13 @@ int main(int argc, const char * argv[])
     
     //RBNode<double>* node = theTree->getRoot();
     //RBNode<double>* min = theTree->max(theTree->getRoot());
-    std::cout<< std::endl;
-    std::cout<< std::endl;
     std::cout<< std::endl<<"Key: "<<theTree->getRoot()->getRight()->getKey()<< std::endl;
-    std::cout<< std::endl;
-    std::cout<< std::endl;
     theTree->inorderTreeWalk((theTree->getRoot()));
     //std::cout<< std::endl<< "Find: " << node->getData() << std::endl;
     std::cout<< std::endl;
     std::cout<< std::endl;
     theTree->printTree((Node<double>*)theTree->getRoot());
-    std::cout<< std::endl;
+    std::cout<< theTree->bracketPrint((Node<double>*)theTree->getRoot()) <<std::endl;
     return 0;
     
 }
