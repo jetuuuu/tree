@@ -28,8 +28,8 @@ public:
     RBNode<VALUE>* getRoot();
     void setRoot(RBNode<VALUE>* rot);
     RBNode<VALUE>* find(int key);
-    void LSZ_Right(RBNode<VALUE>* node, int s);
     void inorderTreeWalk(RBNode<VALUE>* node);
+    void numNode(RBNode<VALUE>* node);
 };
 
 template<class VALUE>
@@ -117,12 +117,10 @@ void RBTree<VALUE>::rotateRight(RBNode<VALUE>* node) {
 
 template <class VALUE>
 bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
-    if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getLeft() != 0)) {
+    if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getLeft() != 0))
         return ((node == node->getParent()->getLeft()) && (node->getParent() == node->getParent()->getParent()->getLeft()));
-    }
-    else if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getRight() != 0) && node->getParent()->getParent()->getRight() != 0) {
+    else if (((node->getParent() != 0) && (node->getParent()->getParent() != 0)) && (node->getParent()->getRight() != 0) && node->getParent()->getParent()->getRight() != 0)
         return ((node == node->getParent()->getRight()) && (node->getParent() == node->getParent()->getParent()->getRight()));
-    }
     else
         return false;
 }
@@ -130,7 +128,7 @@ bool RBTree<VALUE>::externalSon(RBNode<VALUE> *node) {
 template <class VALUE>
 bool RBTree<VALUE>::internalSon(RBNode<VALUE>* node) {
     if (node->getParent()->getRight() != 0 && node->getParent()->getParent()->getLeft() != 0)
-        return ((node == node->getParent()->getRight()) && (node->getParent()->getParent()->getLeft() == node->getParent())); //{
+        return ((node == node->getParent()->getRight()) && (node->getParent()->getParent()->getLeft() == node->getParent()));
     else if ((node->getParent()->getLeft() != 0) && (node->getParent()->getParent()->getRight() != 0))
     return ((node == node->getParent()->getLeft()) && (node->getParent()->getParent()->getRight() == node->getParent()));
     else
@@ -206,12 +204,10 @@ void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
     else if ((node->getParent()->getColor() == RED) && (this->externalSon(node))){
         node->getParent()->getParent()->changeColor();
         node->getParent()->changeColor();
-        if (node->getParent() == node->getParent()->getParent()->getLeft()) {
-                rotateRight(node->getParent()->getParent());
-        }
-        else {
+        if (node->getParent() == node->getParent()->getParent()->getLeft())
+            rotateRight(node->getParent()->getParent());
+        else
             rotateLeft(node->getParent()->getParent());
-        }
     }
     else if ((node->getParent()->getColor() == RED) && (this->internalSon(node))) {
         node->getParent()->getParent()->changeColor();
@@ -229,78 +225,53 @@ void RBTree<VALUE>::fixInsert(RBNode<VALUE> *node) {
 
 template <class VALUE>
 void RBTree<VALUE>::fixDown(RBNode<VALUE>* node) {
-    RBNode<VALUE>* x = node->getParent()->getParent();
-
-    if (x != 0) {
-        RBNode<VALUE>* p = x->getParent();
-        
-        if (p != 0) {
-            RBNode<VALUE>* g = p->getParent();
-            if (g != 0) {
-            if ((x->getColor() == 5) && (x->getColor() == p->getColor())) {
-                if (this->externalSon(x) == true) {
-                    g->changeColor();
-                    p->changeColor();
-                    
-                    if (x == p->getLeft()) {
-                        this->rotateRight(g);
-                    }
-                    else {
-                        this->rotateLeft(g);
-                    }
-                }
-                else if (this->internalSon(x) == true) {
-                    g->changeColor();
-                    x->changeColor();
-                    
-                    if (x == p->getLeft()) {
-                        this->rotateRight(p);
-                    }
-                    else {
-                        this->rotateLeft(p);
-                    }
-                    
-                    if (x->getKey() < g->getKey()) {
-                        this->rotateRight(g);
-                    }
-                    else {
-                        this->rotateLeft(g);
-                    }
-                }
-            }
-            }
-        }
-    }
-    else {
-        return;
-    }
     
-}
-
-template<class VALUE>
-void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
-    if (node != 0) {
-        this->inorderTreeWalk(node->getLeft());
-        if (node->getColor() == RED)
-            std::cout<< node->getKey()<< "(RED); ";
-        else
-            std::cout<< node->getKey()<< "(BLACK); ";
-        this->inorderTreeWalk(node->getRight());
+    RBNode<VALUE>* x = node->getParent()->getParent();
+    RBNode<VALUE>* p = 0;
+    RBNode<VALUE>* g = 0;
+    
+    if (x != 0)
+        p = x->getParent();
+        if (p != 0)
+            g = p->getParent();
+    
+    if ((g != 0) && (p != 0) && (x != 0) && ((x->getColor() == 5) && (x->getColor() == p->getColor()))) {
+        if (this->externalSon(x) == true) {
+            g->changeColor();
+            p->changeColor();
+            
+            if (x == p->getLeft())
+                this->rotateRight(g);
+            else
+                this->rotateLeft(g);
+                
+        }
+        else if (this->internalSon(x) == true) {
+            g->changeColor();
+            x->changeColor();
+                
+            if (x == p->getLeft())
+                this->rotateRight(p);
+            else
+                this->rotateLeft(p);
+                
+            if (x->getKey() < g->getKey())
+                this->rotateRight(g);
+            else
+                this->rotateLeft(g);
+        }
     }
     
 }
 
 template <class VALUE>
-void RBTree<VALUE>::LSZ_Right(RBNode<VALUE>* node, int s)
-{
-    if  (node != NULL)
-    {
-        LSZ_Right(node->getRight(),s+1);
-        for (int i=1;i<=s;i++)
-            std::cout << "\t";
-        std::cout << node->getKey() << std::endl;
-        LSZ_Right(node->getLeft(),s+1);
-
+void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
+    if (node != 0) {
+        this->inorderTreeWalk(node->getLeft());
+        std::string color = (node->getColor() == RED) ? "(RED); " : "(BLACK); ";
+        std::cout<< node->getKey()<< color;
+        this->inorderTreeWalk(node->getRight());
     }
+    
 }
 #endif
