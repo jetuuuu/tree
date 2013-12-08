@@ -24,25 +24,32 @@ int main(int argc, const char * argv[])
     theTree->insert(75, 12);
     theTree->insert(12, 0.54);
     theTree->insert(37, 6.0);
-    theTree->insert(31, 5.4);
-    theTree->insert(43, 7.0);
-    theTree->insert(28, 4.31);
-    //theTree->insert(22, 18.45);
+    theTree->insert(6, 5.4);
+    theTree->insert(18, 7.0);
+    theTree->insert(3, 4.31);
+    //theTree->insert(90, 18.45);
 
     //RBNode<double>* node = theTree->find(13);
     //std::cout<< "Left adress: "<< node->getData()<< std::endl;
     
-    theTree->inorderTreeWalk((theTree->getRoot()));
+
     std::cout<< std::endl;
     std::cout<< std::endl;
-    theTree->LSZ_Right(theTree->getRoot(), 0);
+    //theTree->LSZ_Right(theTree->getRoot(), 0);
     
     //RBNode<double>* node = theTree->getRoot();
     //RBNode<double>* min = theTree->max(theTree->getRoot());
     std::cout<< std::endl;
     std::cout<< std::endl;
     std::cout<< std::endl<<"Key: "<<theTree->getRoot()->getRight()->getKey()<< std::endl;
+    std::cout<< std::endl;
+    std::cout<< std::endl;
+    theTree->inorderTreeWalk((theTree->getRoot()));
     //std::cout<< std::endl<< "Find: " << node->getData() << std::endl;
+    std::cout<< std::endl;
+    std::cout<< std::endl;
+    theTree->printTree((Node<double>*)theTree->getRoot());
+    std::cout<< std::endl;
     return 0;
     
 }

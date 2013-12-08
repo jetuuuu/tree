@@ -21,18 +21,13 @@ private:
     
     Node<VALUE>* root;
     
-    
 public:
     
     Tree(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
     Node<VALUE>* find(int key);
     void insert(int key, VALUE data);
-    void deleteElements(int key);
     Node<VALUE>* getRoot();
 };
-
-
-#endif /* defined(__tree__Tree__) */
 
 template<class VALUE>
 Tree<VALUE>::Tree(int key, VALUE data, Node<VALUE>* left, Node<VALUE>* right) {
@@ -58,7 +53,7 @@ void Tree<VALUE>::insert(int key, VALUE data) {
             
             if (key < current->getKey()) {
                 
-                current = &current->getLeft();
+                current = current->getLeft();
                 if (current == 0) {
                     parent->setLeft(newNode);
                     return;
@@ -66,7 +61,7 @@ void Tree<VALUE>::insert(int key, VALUE data) {
                 
             }
             else {
-                current = &current->getRight();
+                current = current->getRight();
                 if (current == 0) {
                     parent->setRight(newNode);
                     return;
@@ -89,3 +84,4 @@ template<class VALUE>
 Node<VALUE>* Tree<VALUE>::getRoot() {
     return this->root;
 }
+#endif /* defined(__tree__Tree__) */
