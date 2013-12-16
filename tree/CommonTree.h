@@ -9,7 +9,8 @@
 #ifndef tree_CommonTree_h
 #define tree_CommonTree_h
 
-#include <string>
+//#include <string>
+#include <iostream>
 #include <sstream>
 
 #include "Node.h"
@@ -21,31 +22,48 @@ public:
     virtual void inorderTreeWalk(Node<VALUE>* node);
     virtual Node<VALUE>* max(Node<VALUE>* node);
     virtual Node<VALUE>* min(Node<VALUE>* node);
-    void printTree(Node<VALUE>* tree);
+    void printTree(Node<VALUE>* tree, bool flag = true);
     std::string bracketPrint(Node<VALUE>* node);
+    size_t getWeidth(Node<VALUE>* node, int width);
 private:
     std::string tree;
     void traversal(Node<VALUE>* node);
-    int _print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255]);
+    int _print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255], bool flag = true, size_t size = 0);
+    size_t width;
 protected:
     virtual Node<VALUE>* find(int key, Node<VALUE>* node);
 };
 
 template <class VALUE>
-int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255])
+size_t CommonTree<VALUE>::getWeidth(Node<VALUE>* node, int width) {
+    if (node == 0)
+        return width;
+    else
+        return std::max(getWeidth(node->getLeft(), width + 1), getWeidth(node->getRight(), width + 1));
+}
+
+template <class VALUE>
+int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255], bool flag, size_t size)
 {
-    char b[20];
-    int width = 5;
+    char b[6];
+    size_t width = 4;
     
-    if (!tree) return 0;
+    if (!tree)
+        return 0;
+    //std::cout<< "Тута" <<std::endl;
+    if (flag)
+        sprintf(b, "(%02d)", tree->getKey());
+    else {
+        //std::cout<< b <<std::endl;
+        //sprintf(b, "(%f)", tree->getData());
+    }
     
-    sprintf(b, "(%03d)", tree->getKey());
+    int left  = _print_t(tree->getLeft(),  1, offset, depth + 1, s, flag, size);
+    int right = _print_t(tree->getRight(), 0, offset + left + width, depth + 1, s, flag, size);
     
-    int left  = _print_t(tree->getLeft(),  1, offset, depth + 1, s);
-    int right = _print_t(tree->getRight(), 0, offset + left + width, depth + 1, s);
-    
-    for (int i = 0; i < width; i++)
+    for (int i = 0; i < width; i++) {
         s[depth][offset + left + i] = b[i];
+    }
     
     if (depth && is_left) {
         
@@ -66,16 +84,19 @@ int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int 
 }
 
 template <class VALUE>
-void CommonTree<VALUE>::printTree(Node<VALUE>* tree)
+void CommonTree<VALUE>::printTree(Node<VALUE>* tree, bool flag)
 {
+    int size = this->getWeidth(tree, this->width);
+    std::cout<< "SIZE: " << size <<std::endl;
     char s[20][255];
     for (int i = 0; i < 20; i++)
-        sprintf(s[i], "%80s", " ");
+        sprintf(s[i], "%190s", " ");
     
-    _print_t(tree, 0, 0, 0, s);
+    _print_t(tree, 0, 0, 0, s, flag, size);
     
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) {
         printf("%s\n", s[i]);
+    }
 }
 
 template<class VALUE>
@@ -131,7 +152,7 @@ void CommonTree<VALUE>::traversal(Node<VALUE> *node) {
         this->traversal(node->getLeft());
     if (node->getRight() != 0)
         this->traversal(node->getRight());
-
+    
     this->tree += ')';
 }
 

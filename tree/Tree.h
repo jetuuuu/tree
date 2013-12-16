@@ -27,6 +27,7 @@ public:
     Node<VALUE>* find(int key);
     void insert(int key, VALUE data);
     Node<VALUE>* getRoot();
+    friend std::ostream& operator<<(std::ostream& stream, const Tree<VALUE>& node);
 };
 
 template<class VALUE>
@@ -35,7 +36,11 @@ Tree<VALUE>::Tree(int key, VALUE data, Node<VALUE>* left, Node<VALUE>* right) {
     this->root = root;
 }
 
-
+template <class VALUE>
+std::ostream& operator<<(std::ostream& stream, Tree<VALUE>& tree) {
+    stream<< tree.bracketPrint(tree.getRoot());
+    return stream;
+}
 
 template<class VALUE>
 void Tree<VALUE>::insert(int key, VALUE data) {

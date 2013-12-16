@@ -26,6 +26,7 @@ private:
     RBNode<VALUE>* rightChild;
 public:
     RBNode(int key, VALUE data, RBNode<VALUE>* right = 0, RBNode<VALUE>* left = 0, RBNode<VALUE>* parent = 0, colorNode color = RED);
+    ~RBNode();
     int getColor();
     RBNode* getParent();
     virtual int getKey();
@@ -80,6 +81,12 @@ RBNode<VALUE>* RBNode<VALUE>::getParent() {
 
 template<class VALUE>
 int RBNode<VALUE>::getKey() {
+    int k;
+    try {
+        k = this->key;
+    } catch (...) {
+        std::cout<< "Error return key" <<std::endl;
+    }
     return this->key;
 }
 
@@ -116,5 +123,10 @@ void RBNode<VALUE>::setParent(RBNode<VALUE> *perent) {
 template <class VALUE>
 bool RBNode<VALUE>::operator==(RBNode<VALUE> &node) {
     return ((this->getKey() == node.getKey()) && (this->getData() == node.getData()));
+}
+
+template <class VALUE>
+RBNode<VALUE>::~RBNode<VALUE>() {
+    std::cout<<"DESTRUCT Node"<<std::endl;
 }
 #endif

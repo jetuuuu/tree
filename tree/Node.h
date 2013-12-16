@@ -11,6 +11,11 @@
 
 #include <iostream>
 
+
+#include <stdexcept>
+#include <limits>
+
+
 template<class VALUE>
 
 class Node {
@@ -24,7 +29,9 @@ private:
 public:
     
     Node(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
+    Node();
     virtual int getKey();
+    void setData(VALUE data);
     virtual VALUE getData();
     virtual Node<VALUE>* getLeft();
     virtual Node<VALUE>* getRight();
@@ -32,6 +39,9 @@ public:
     virtual void setRight(Node<VALUE>* right);
     ~Node();
 };
+
+template<class VALUE>
+Node<VALUE>::Node() {};
 
 template<class VALUE>
 Node<VALUE>::Node(int key, VALUE data, Node<VALUE>* left, Node<VALUE>* right) {
@@ -61,6 +71,11 @@ Node<VALUE>* Node<VALUE>::getLeft() {
 template<class VALUE>
 Node<VALUE>* Node<VALUE>::getRight() {
     return this->rightChild;
+}
+
+template<class VALUE>
+void Node<VALUE>::setData(VALUE data) {
+    this->data = data;
 }
 
 template<class VALUE>

@@ -25,17 +25,25 @@ private:
 public:
     void insert(int key, VALUE data);
     RBTree(int key, VALUE data, RBNode<VALUE>* left = 0, RBNode<VALUE>* right = 0);
+    ~RBTree();
     RBNode<VALUE>* getRoot();
     void setRoot(RBNode<VALUE>* rot);
     RBNode<VALUE>* find(int key);
     void inorderTreeWalk(RBNode<VALUE>* node);
     void numNode(RBNode<VALUE>* node);
+    friend std::ostream& operator<<(std::ostream& stream, const RBTree<VALUE>& tree);
 };
 
 template<class VALUE>
 RBTree<VALUE>::RBTree(int key, VALUE data, RBNode<VALUE>* left, RBNode<VALUE>* right) {
     RBNode<VALUE>* root = new RBNode<VALUE>(key, data, left, right, 0, BLACK);
     this->root = root;
+}
+
+template <class VALUE>
+std::ostream& operator<<(std::ostream& stream, RBTree<VALUE>& tree) {
+    stream<< tree.bracketPrint((Node<VALUE>*)tree.getRoot());
+    return stream;
 }
 
 template <class VALUE>
@@ -273,5 +281,11 @@ void RBTree<VALUE>::inorderTreeWalk(RBNode<VALUE>* node) {
         this->inorderTreeWalk(node->getRight());
     }
     
+}
+
+template <class VALUE>
+RBTree<VALUE>::~RBTree<VALUE>() {
+    std::cout<<"DESTRUCT"<<std::endl;
+    delete root;
 }
 #endif
