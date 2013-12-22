@@ -24,10 +24,17 @@ private:
 public:
     
     Tree(int key, VALUE data, Node<VALUE>* left = 0, Node<VALUE>* right = 0);
+    Tree();
     Node<VALUE>* find(int key);
     void insert(int key, VALUE data);
     Node<VALUE>* getRoot();
+    Node<VALUE>** getPointerRoot();
     friend std::ostream& operator<<(std::ostream& stream, const Tree<VALUE>& node);
+};
+
+template<class VALUE>
+Tree<VALUE>::Tree() {
+    this->root = 0;
 };
 
 template<class VALUE>
@@ -83,6 +90,11 @@ Node<VALUE>* Tree<VALUE>::find(int key) {
     Node<VALUE>* current = this->root;
     return CommonTree<VALUE>::find(key, current);
     
+}
+
+template<class VALUE>
+Node<VALUE>** Tree<VALUE>::getPointerRoot() {
+    return &root;
 }
 
 template<class VALUE>

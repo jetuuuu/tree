@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		114CD8C418097C27009B4D7C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 114CD8C318097C27009B4D7C /* main.cpp */; };
 		114CD8C618097C27009B4D7C /* tree.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 114CD8C518097C27009B4D7C /* tree.1 */; };
+		6E35551C185F4BC500FB403F /* BTS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E35551A185F4BC500FB403F /* BTS.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,8 @@
 		114CD8C518097C27009B4D7C /* tree.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = tree.1; sourceTree = "<group>"; };
 		114CD8CD18098107009B4D7C /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		114CD8D01809837B009B4D7C /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		6E35551A185F4BC500FB403F /* BTS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BTS.cpp; sourceTree = "<group>"; };
+		6E35551B185F4BC500FB403F /* BTS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTS.h; sourceTree = "<group>"; };
 		6E973BD618487BD100F7FAD9 /* RBTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RBTree.h; path = ../RBTree.h; sourceTree = "<group>"; };
 		6E973BD71848820100F7FAD9 /* CommonTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonTree.h; sourceTree = "<group>"; };
 		6ED5196118421E4600F1BA5A /* RBNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNode.h; sourceTree = "<group>"; };
@@ -65,6 +68,8 @@
 		114CD8C218097C27009B4D7C /* tree */ = {
 			isa = PBXGroup;
 			children = (
+				6E35551A185F4BC500FB403F /* BTS.cpp */,
+				6E35551B185F4BC500FB403F /* BTS.h */,
 				6E973BD618487BD100F7FAD9 /* RBTree.h */,
 				114CD8C318097C27009B4D7C /* main.cpp */,
 				6ED5196118421E4600F1BA5A /* RBNode.h */,
@@ -128,6 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				114CD8C418097C27009B4D7C /* main.cpp in Sources */,
+				6E35551C185F4BC500FB403F /* BTS.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

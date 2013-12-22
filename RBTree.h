@@ -193,7 +193,6 @@ void RBTree<VALUE>::insert(int key, VALUE data) {
             }
         }
     }
-    std::cout<< "FIX: " << newNode->getKey() << std::endl;
     this->fixInsert(newNode);
     this->fixDown(newNode);
 }

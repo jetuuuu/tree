@@ -12,6 +12,7 @@
 //#include <string>
 #include <iostream>
 #include <sstream>
+#include <typeinfo>
 
 #include "Node.h"
 
@@ -46,16 +47,19 @@ template <class VALUE>
 int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int depth, char s[20][255], bool flag, size_t size)
 {
     char b[6];
-    size_t width = 4;
+    size_t width;
+    if ((typeid(std::string) == typeid(VALUE)) && !flag) {
+        width = 7;
+    }
+    else
+        width = 4;
     
     if (!tree)
         return 0;
-    //std::cout<< "Тута" <<std::endl;
     if (flag)
         sprintf(b, "(%02d)", tree->getKey());
-    else {
-        //std::cout<< b <<std::endl;
-        //sprintf(b, "(%f)", tree->getData());
+    if ((typeid(std::string) == typeid(VALUE)) && !flag) {
+        sprintf(b, "(%s)", tree->getData().c_str());
     }
     
     int left  = _print_t(tree->getLeft(),  1, offset, depth + 1, s, flag, size);
@@ -86,11 +90,10 @@ int CommonTree<VALUE>::_print_t(Node<VALUE>* tree, int is_left, int offset, int 
 template <class VALUE>
 void CommonTree<VALUE>::printTree(Node<VALUE>* tree, bool flag)
 {
-    int size = this->getWeidth(tree, this->width);
-    std::cout<< "SIZE: " << size <<std::endl;
-    char s[20][255];
-    for (int i = 0; i < 20; i++)
-        sprintf(s[i], "%190s", " ");
+    int size = 4;
+    char s[30][255];
+    for (int i = 0; i < 30; i++)
+        sprintf(s[i], "%250s", " ");
     
     _print_t(tree, 0, 0, 0, s, flag, size);
     

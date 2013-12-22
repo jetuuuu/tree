@@ -15,7 +15,7 @@ enum colorNode {RED = 5, BLACK = 10};
 
 template<class VALUE>
 
-class RBNode /*: public Node<VALUE>*/ {
+class RBNode {
     
 private:
     colorNode color;
@@ -81,12 +81,6 @@ RBNode<VALUE>* RBNode<VALUE>::getParent() {
 
 template<class VALUE>
 int RBNode<VALUE>::getKey() {
-    int k;
-    try {
-        k = this->key;
-    } catch (...) {
-        std::cout<< "Error return key" <<std::endl;
-    }
     return this->key;
 }
 
@@ -125,8 +119,4 @@ bool RBNode<VALUE>::operator==(RBNode<VALUE> &node) {
     return ((this->getKey() == node.getKey()) && (this->getData() == node.getData()));
 }
 
-template <class VALUE>
-RBNode<VALUE>::~RBNode<VALUE>() {
-    std::cout<<"DESTRUCT Node"<<std::endl;
-}
 #endif

@@ -35,6 +35,8 @@ public:
     virtual VALUE getData();
     virtual Node<VALUE>* getLeft();
     virtual Node<VALUE>* getRight();
+    Node<VALUE>** getPointerLeft();
+    Node<VALUE>** getPointerRight();
     virtual void setLeft(Node<VALUE>* left);
     virtual void setRight(Node<VALUE>* right);
     ~Node();
@@ -62,6 +64,17 @@ template<class VALUE>
 VALUE Node<VALUE>::getData() {
     return this->data;
 }
+
+template<class VALUE>
+Node<VALUE>** Node<VALUE>::getPointerLeft() {
+    return &leftChild;
+}
+
+template<class VALUE>
+Node<VALUE>** Node<VALUE>::getPointerRight() {
+    return &rightChild;
+}
+
 
 template<class VALUE>
 Node<VALUE>* Node<VALUE>::getLeft() {
